@@ -1,25 +1,21 @@
-# SvgToXaml
-Smart tool to view svg-files and convert them to xaml for use in .NET
-There are 3 major use cases:
-View many svg-files, examine single files closer (see additional Info, svg sources, xaml code)
-Convert svg-file to xaml
-Batch conversion of many svg-files
-# View
-Just start SvgToXaml and drag a folder into the view, this folder will open and you'll see a list of all the svgs located in that folder. Sure there is a button to open also a "open folder" dialog. Double click a icon see the detail view.
+# 改动
+核心代码所有权是  BerndK,只做以下改动:
+1.添加批量转化为WPF专用资源,key名为文件名
+2.移除剪贴板功能(因为win11有程序占用时会导致该功能闪退,无解)
+3.优化UI交互,在主界面添加快速预览
+4.修复原版筛选图片的错误,比如也读取名字带有svg字段的文件,压缩包之类
+5.移除Svg文件之外的媒体文件导入
+6.使用新版文件选择界面
+7.使用HandyContro控件库替换原版UI
 
+# SvgToXaml
+用于查看 svg 文件并将其转换为 xaml 以供 .NET 使用的智能工具有 3 个主要用例：查看多个 svg 文件、仔细检查单个文件（查看其他信息、svg 源、xaml 代码）将 svg 文件转换为 xaml 批量转换多个 svg 文件
+
+# 预览
 ![Main View](/Doc/New.png)
 
-Just drag a file into the view and the detail view will open.
-
-![Detail View](/Doc/DetailView.PNG)
-
-# Convert
-You can open the detail view by double-clicking an icon. Here you can inspect the icon closer and can also see the converted xaml-code.
-
-![Detail View Xaml](/Doc/DetailViewXaml.PNG)
-# Batch conversion
-The idea is that you collect some svgs and want to use them in your .net app. So just put them in a folder and use SvgToXaml to batch convert them into one xaml-file.
-The SvgToXaml exe file is designed as a "hybrid" app. Just call it without params and it will start as a WPF app, when you specify params, it will change to a console app. Provide "/?" to see the help, there is only one command rigth now: "BuildDict"
+# 批量转换
+这个想法是，您收集一些 svg 并希望在您的 .net 应用程序中使用它们。因此，只需将它们放在一个文件夹中，然后使用 SvgToXaml 将它们批量转换为一个 xaml 文件。SvgToXaml exe 文件被设计为“混合”应用程序。只需不带参数调用它，它就会作为 WPF 应用程序启动，当您指定参数时，它将更改为控制台应用程序。提供“/？”查看帮助，现在只有一个命令：“BuildDict”
 ```
 >SvgToXaml.exe /? BuildDict
 SvgToXaml - Tool to convert SVGs to a Dictionary
@@ -32,15 +28,12 @@ SvgToXaml - Tool to convert SVGs to a Dictionary
                 /outputdir: folder for the xaml-Output, optional, default: folder of svgs
                 /buildhtmlfile: Builds a htmlfile to browse the svgs, optional,default true
 ```
-Example:
+示例:
 `..\..\SvgToXaml\bin\Debug\SvgToXaml.exe BuildDict /inputdir:.\svg /outputname:images /outputdir:.`
-This is the content of the cmd file included in the sample app. It will produce a xaml file named "images.xaml" in the current folder, including all svg-files from folder ".\svg".
-That's it, after that, include the file "images.xaml" into your app, merge it into resourcedictionaries in the app.xaml and you can use the icons in e.g. a button like this:
+这是示例应用程序中包含的 cmd 文件的内容。它将在当前文件夹中生成一个名为“images.xaml”的 xaml 文件，其中包括文件夹“.\svg”中的所有 svg 文件。就是这样，之后，将文件“images.xaml”包含到您的应用程序中，将其合并到 app.xaml 中的资源字典中，然后您就可以在按钮中使用图标，例如：
 ```
 <Button>
     <Image Source="{StaticResource cloud_3_iconDrawingImage}"/>
 </Button>
 ```
-after adding more new icons, just run the command again and the new icons will appear in the updated xaml-file.
-For each Icon the colors, paths, a drawingimage are created (with resource-keys) so you can use them as you like.
-You can change the color of all icons at once (like theming your app) or you can change all the color of the icons separately (see the sample app included in the sources).
+添加更多新图标后，只需再次运行该命令，新图标就会出现在更新的 xaml 文件中。对于每个图标，都会创建颜色、路径和绘图图像（使用资源键），以便您可以随意使用它们。您可以一次更改所有图标的颜色（例如为您的应用设置主题），也可以单独更改所有图标的颜色（请参阅源中包含的示例应用）。
