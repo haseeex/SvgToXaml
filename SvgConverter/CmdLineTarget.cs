@@ -10,31 +10,31 @@ namespace SvgConverter
 {
     public class CmdLineTarget : SimpleBaseTarget
     {
-        [ArgumentCommand(LongDesc = "Creates a ResourceDictionary with the svg-Images of a folder")]
+        [ArgumentCommand(LongDesc = "使用文件夹的 svg-Images 创建资源字典")]
         public int BuildDict(
-            [ArgumentParam(Aliases = "i", Desc = "dir to the SVGs", LongDesc = "specify folder of the graphic files to process")]
+            [ArgumentParam(Aliases = "i", Desc = "dir to the SVGs", LongDesc = "指定要处理的图形文件的文件夹")]
             string inputdir,
-            [ArgumentParam(Aliases = "o", LongDesc = "Name for the xaml outputfile")]
+            [ArgumentParam(Aliases = "o", LongDesc = "xaml 输出文件的名称")]
             string outputname,
-            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "folder for the xaml-Output, optional, default: folder of svgs")]
+            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "xaml 输出的文件夹，可选，默认：svgs 文件夹")]
             string outputdir = null,
-            [ArgumentParam(LongDesc = "Builds a htmlfile to browse the svgs, optional, default true")]
+            [ArgumentParam(LongDesc = "构建一个html文件来浏览svgs，可选，默认true")]
             bool buildhtmlfile = true,
-            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "Prefix to name all items of this file, optional, default: no prefix")]
+            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "命名该文件所有项目的前缀，可选，默认：无前缀")]
             string nameprefix = null,
-            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "If true, es explicit ResourceKey File is created, default: false", ExplicitWantedArguments = "resKeyNS,resKeyNSName")]
+            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "如果为 true，则创建显式资源密钥文件，默认值： false", ExplicitWantedArguments = "resKeyNS,resKeyNSName")]
             bool useComponentResKeys = false,
-            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "Namespace to use with UseResKey")]
+            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "与 Use Res Key 一起使用的命名空间")]
             string compResKeyNS = null,
-            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "name of Namespace to use with UseResKey" )]
+            [ArgumentParam(DefaultValue = null, ExplicitNeeded = false, LongDesc = "与 Use Res Key 一起使用的命名空间的名称" )]
             string compResKeyNSName = null,
-            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "If true, PixelsPerDip is filtered to ensure compatibility for < 4.6.2, default: false")]
+            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "如果为 true，则过滤 Pixels Per Dip 以确保与 < 4.6.2 的兼容性，默认值： false")]
             bool filterPixelsPerDip = false,
-            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "Recursive goes through inputdir subfolders")]
+            [ArgumentParam(DefaultValue = false, ExplicitNeeded = false, LongDesc = "递归遍历 inputdir 子文件夹")]
             bool handleSubFolders = false
             )
         {
-            Console.WriteLine("Building resource dictionary...");
+            Console.WriteLine("构建资源字典...");
             var outFileName = Path.Combine(outputdir ?? inputdir, outputname);
             if (!Path.HasExtension(outFileName))
                 outFileName = Path.ChangeExtension(outFileName, ".xaml");
@@ -50,7 +50,7 @@ namespace SvgConverter
             };
 
             File.WriteAllText(outFileName, ConverterLogic.SvgDirToXaml(inputdir, resKeyInfo, null, filterPixelsPerDip, handleSubFolders));
-            Console.WriteLine("xaml written to: {0}", Path.GetFullPath(outFileName));
+            Console.WriteLine("xaml 写入到: {0}", Path.GetFullPath(outFileName));
 
             if (buildhtmlfile)
             {
@@ -98,7 +98,7 @@ namespace SvgConverter
             ));
             var filename = Path.ChangeExtension(outputFilename, ".html");
             doc.Save(filename);
-            Console.WriteLine("Html overview written to {0}", filename);
+            Console.WriteLine("Html 覆盖到 {0}", filename);
         }
     }
 }

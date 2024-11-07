@@ -17,7 +17,7 @@ namespace SvgToXaml
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new SvgImagesViewModel();
+            DataContext = new SvgImagesViewModel(this);
             ((SvgImagesViewModel) DataContext).CurrentDir = Settings.Default.LastDir;
         }
 
@@ -53,7 +53,8 @@ namespace SvgToXaml
                 }
             }
         }
+
     }
 
-   
+
 }

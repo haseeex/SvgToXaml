@@ -25,7 +25,7 @@ namespace SvgConverter
 
         public string Svg
         {
-            get { return _svg ?? (_svg = File.ReadAllText(_filepath)); }
+            get { return _svg ?? (_svg = !string.IsNullOrEmpty(_filepath) ? File.ReadAllText(_filepath) : ""); }
             set { _svg = value; }
         }
 

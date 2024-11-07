@@ -359,6 +359,7 @@ namespace SvgConverter
             //        return reader.Drawing;
             //    }
             //}
+            if(string.IsNullOrEmpty(filepath)) return null;
 
             filepath = Path.GetFullPath(filepath);
             Stream stream = IsSvgz(filepath)
@@ -562,6 +563,8 @@ namespace SvgConverter
 
         public static void RemoveObjectNames(DrawingGroup drawingGroup)
         {
+            if(drawingGroup == null) return;
+
             if (drawingGroup.GetValue(FrameworkElement.NameProperty) != null)
                 drawingGroup.SetValue(FrameworkElement.NameProperty, null);
             foreach (var child in drawingGroup.Children.OfType<DependencyObject>())

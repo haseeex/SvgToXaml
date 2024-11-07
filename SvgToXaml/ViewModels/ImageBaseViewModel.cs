@@ -1,8 +1,11 @@
 using System.Diagnostics;
 using System.IO;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using GalaSoft.MvvmLight.Messaging;
 using SvgToXaml.Command;
+using SvgToXaml.Models;
 
 namespace SvgToXaml.ViewModels
 {
@@ -12,6 +15,7 @@ namespace SvgToXaml.ViewModels
         {
             Filepath = filepath;
             OpenDetailCommand = new DelegateCommand(OpenDetailExecute);
+            ReadSvgCmd = new DelegateCommand(ReadSvg);
             OpenFileCommand = new DelegateCommand(OpenFileExecute);
         }
 
@@ -19,6 +23,7 @@ namespace SvgToXaml.ViewModels
         public string Filename => Path.GetFileName(Filepath);
         public ImageSource PreviewSource => GetImageSource();
         public ICommand OpenDetailCommand { get; set; }
+        public ICommand ReadSvgCmd { get; set; }
         public ICommand OpenFileCommand { get; set; }
         protected abstract ImageSource GetImageSource();
         public abstract bool HasXaml { get; }
@@ -41,5 +46,17 @@ namespace SvgToXaml.ViewModels
         }
 
         protected abstract string GetSvgDesignInfo();
+
+
+        private void ReadSvg()
+        {
+            Messenger.Default.Send(new VCSvgModel() 
+            {
+                文件名 = Filename,
+                图片 = PreviewSource,
+                设计尺寸 = SvgDesignInfo,
+                文件路径 = Filepath
+            });
+        }
     }
 }
